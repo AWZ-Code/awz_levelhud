@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>awz_levelhud</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="levelHud" class="levelHud" aria-hidden="true">
+    <div class="levelHud__card">
+      <div class="levelHud__inner">
+        <div class="rankBadge" aria-hidden="true">
+          <img src="img/mp_rank_toast.png" alt="" />
+          <div id="rankNumber" class="rankBadge__number">1</div>
+        </div>
+
+        <div class="xpWrap">
+          <div class="xpBar" aria-hidden="true">
+            <img class="xpBar__track" src="img/weapon_stats_bar.png" alt="" />
+            <div id="xpFillClip" class="xpBar__fillClip">
+              <img class="xpBar__fill" src="img/weapon_stats_bar_mask.png" alt="" />
+            </div>
+          </div>
+
+          <div class="xpMeta">
+            <span class="xpMeta__label">LIVELLO</span>
+            <span id="xpMetaValue" class="xpMeta__value">0 / 100 XP</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="levelToast" class="levelToast" aria-hidden="true">
+    <div class="levelToast__card">
+      <div id="levelToastTitle" class="levelToast__title">LIVELLO AUMENTATO</div>
+      <div class="levelToast__levels">
+        <span id="levelToastOld" class="levelToast__num">1</span>
+        <span class="levelToast__arrow">→</span>
+        <span id="levelToastNew" class="levelToast__num">2</span>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,314 @@
+:root {
+  --hud-w: 475px;
+  --hud-h: 105px;
+
+  --badge-size: 86px;
+
+  --bar-w: 320px;
+  --bar-h: 15px;
+
+  --text-main: rgba(255,255,255,0.96);
+  --text-soft: rgba(255,255,255,0.60);
+  --text-dark: rgba(12,12,12,0.96);
+
+  --toast-w: 320px;
+  --toast-h: 74px;
+}
+
+* {
+  box-sizing: border-box;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+html,
+body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: transparent !important;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+  pointer-events: none;
+}
+
+.levelHud {
+  position: fixed;
+  top: 40px;
+  left: 48px;
+  width: var(--hud-w);
+  height: var(--hud-h);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px);
+  transition:
+    opacity 180ms ease,
+    transform 220ms ease,
+    visibility 0ms linear 220ms;
+}
+
+.levelHud.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  transition:
+    opacity 180ms ease,
+    transform 220ms ease,
+    visibility 0ms linear 0ms;
+}
+
+.levelHud__card {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: url("img/selection_box_bg_1c.png") center / 100% 100% no-repeat;
+}
+
+.levelHud__card::before {
+  content: "";
+  position: absolute;
+  inset: 7px 8px;
+  opacity: 0.9;
+}
+
+.levelHud__inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  height: 100%;
+  padding: 8px 16px 8px 12px;
+}
+
+.rankBadge {
+  position: relative;
+  flex: 0 0 var(--badge-size);
+  width: var(--badge-size);
+  height: var(--badge-size);
+  filter: drop-shadow(0 3px 7px rgba(0,0,0,0.42));
+}
+
+.rankBadge img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.rankBadge__number {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: var(--text-dark);
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 900;
+  line-height: 1;
+
+  text-shadow:
+    0 1px 0 rgba(255,255,255,0.14),
+    0 0 1px rgba(0,0,0,0.15);
+
+  -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
+}
+
+.rankBadge__number[data-digits="1"] {
+  font-size: 48px;
+  letter-spacing: -0.03em;
+  transform: translate(-1px, -2px) scaleY(1.04);
+}
+
+.rankBadge__number[data-digits="2"] {
+  font-size: 42px;
+  letter-spacing: -0.04em;
+  transform: translate(-1px, -2px) scaleY(1.04);
+}
+
+.rankBadge__number[data-digits="3"] {
+  font-size: 36px;
+  letter-spacing: -0.06em;
+  transform: translate(0px, -2px) scaleY(1.02);
+}
+
+.xpWrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 7px;
+  min-width: 0;
+  flex: 0 0 auto;
+  margin-top: 1px;
+}
+
+.xpBar {
+  position: relative;
+  width: var(--bar-w);
+  height: var(--bar-h);
+  overflow: hidden;
+}
+
+.xpBar__track,
+.xpBar__fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  height: 100%;
+}
+
+.xpBar__track {
+  width: 100%;
+  opacity: 0.92;
+  filter: brightness(0.22) contrast(1.08);
+}
+
+.xpBar__fillClip {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 100%;
+  overflow: hidden;
+  transition: width 260ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.xpBar__fill {
+  width: var(--bar-w);
+  max-width: none;
+  min-width: var(--bar-w);
+  object-fit: fill;
+  filter: drop-shadow(0 0 4px rgba(255,255,255,0.12));
+}
+
+.xpMeta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  width: var(--bar-w);
+}
+
+.xpMeta__label {
+  color: var(--text-soft);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.20em;
+  text-transform: uppercase;
+}
+
+.xpMeta__value {
+  color: var(--text-main);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.32);
+}
+
+/* TOAST */
+
+.levelToast {
+  position: fixed;
+  top: 148px;
+  left: 48px;
+  width: var(--toast-w);
+  height: var(--toast-h);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(-18px) translateY(-4px);
+  transition:
+    opacity 180ms ease,
+    transform 260ms cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 0ms linear 260ms;
+}
+
+.levelToast.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(0) translateY(0);
+  transition:
+    opacity 180ms ease,
+    transform 260ms cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 0ms linear 0ms;
+}
+
+.levelToast__card {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 12px 16px;
+  background: url("img/selection_box_bg_1c.png") center / 100% 100% no-repeat;
+  filter: drop-shadow(0 8px 18px rgba(0,0,0,0.42));
+}
+
+.levelToast__card::before {
+  content: "";
+  position: absolute;
+  inset: 7px 8px;
+  background: linear-gradient(180deg, rgba(10,10,10,0.70), rgba(10,10,10,0.38));
+  border-radius: 2px;
+}
+
+.levelToast__card::after {
+  content: "";
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 10px;
+  height: 2px;
+  opacity: 0.9;
+}
+
+.levelToast.is-up .levelToast__card::after {
+  background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,0.9), rgba(255,255,255,0));
+}
+
+.levelToast.is-down .levelToast__card::after {
+  background: linear-gradient(90deg, rgba(255,255,255,0), rgba(180,180,180,0.9), rgba(255,255,255,0));
+}
+
+.levelToast__title,
+.levelToast__levels {
+  position: relative;
+  z-index: 1;
+}
+
+.levelToast__title {
+  color: rgba(255,255,255,0.90);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.20em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.35);
+}
+
+.levelToast__levels {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.levelToast__num {
+  color: rgba(255,255,255,0.96);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 28px;
+  font-weight: 200;
+  line-height: 1;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.35);
+}
+
+.levelToast__arrow {
+  color: rgba(255,255,255,0.78);
+  font-size: 20px;
+  font-weight: 900;
+  line-height: 1;
+}
