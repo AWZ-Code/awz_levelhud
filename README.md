@@ -931,15 +931,3 @@ end, false)
 - **HUD behavior:** client-side NUI, visible while peek key is held
 
 ---
-
-## File naming recommendation
-
-If you ship this documentation with the resource, use:
-
-```text
-awz_levelhud/
-  README.md
-  API.md
-```
-
-This file is intended to be the technical companion to the general README.
