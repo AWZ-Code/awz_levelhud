@@ -1,3 +1,5 @@
+<img width="626" height="215" alt="image" src="https://github.com/user-attachments/assets/400c8efc-e8cd-46bc-a6a8-58eae9ab21c4" />
+
 # awz_levelhud — API Reference
 
 > Developer reference for the **awz_levelhud** RedM resource.
