@@ -1,6 +1,6 @@
 Config = {}
 
-Config.Debug = true
+Config.Debug = false
 
 Config.Database = {
   TableName = 'awz_levelhud_players',

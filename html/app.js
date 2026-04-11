@@ -53,7 +53,7 @@ function showToast(payload = {}) {
   const newLevel = Math.max(1, Math.floor(Number(payload.newLevel) || 1));
   const duration = Math.max(500, Math.floor(Number(payload.duration) || 2600));
 
-  toastTitle.textContent = kind === 'down' ? 'LIVELLO RIDOTTO' : 'LIVELLO AUMENTATO';
+  toastTitle.textContent = kind === 'down' ? 'RANGO RIDOTTO' : 'RANGO AUMENTATO';
   toastOld.textContent = String(oldLevel);
   toastNew.textContent = String(newLevel);
 

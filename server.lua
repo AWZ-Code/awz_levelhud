@@ -234,14 +234,24 @@ local function loadPlayer(src)
     local startXp = math.max(0, floor(Config.Leveling.StartTotalXP or 0))
     local computed = computeFromTotalXp(startXp)
 
-    MySQL.insert.await(('INSERT INTO `%s` (`charid`, `identifier`, `level`, `total_xp`) VALUES (?, ?, ?, ?)'):format(TABLE), {
+    MySQL.update.await(([[
+      INSERT INTO `%s` (`charid`, `identifier`, `level`, `total_xp`)
+      VALUES (?, ?, ?, ?)
+      ON DUPLICATE KEY UPDATE
+        `identifier` = VALUES(`identifier`),
+        `level` = VALUES(`level`),
+        `total_xp` = VALUES(`total_xp`),
+        `updated_at` = CURRENT_TIMESTAMP
+    ]]):format(TABLE), {
       key.charid,
       key.identifier,
       computed.level,
       computed.totalXp
     })
 
-    row = {
+    row = MySQL.single.await(('SELECT `identifier`, `level`, `total_xp` FROM `%s` WHERE `charid` = ? LIMIT 1'):format(TABLE), {
+      key.charid
+    }) or {
       identifier = key.identifier,
       level = computed.level,
       total_xp = computed.totalXp
@@ -609,7 +619,7 @@ if Config.Admin.Enabled then
       return
     end
 
-    reply(src, ('Impostati %s XP totali a %s -> livello %s (charid %s)'):format(
+    reply(src, ('Impostati %s XP totali a %s -> RANGO %s (charid %s)'):format(
       data.totalXp, target, data.level, data.charid
     ))
   end, false)
