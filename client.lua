@@ -60,6 +60,10 @@ local function buildPayload(action, visible)
   }
 end
 
+local function setWatermarkSuppressed(suppressed)
+  TriggerEvent('awz_watermark:setSuppressed', suppressed == true)
+end
+
 local function sendShow()
   local payload = buildPayload('level:show', true)
   SendNUIMessage(payload)
@@ -145,6 +149,7 @@ end)
 AddEventHandler('onResourceStop', function(res)
   if res ~= RESOURCE then return end
   hideHud()
+  setWatermarkSuppressed(false)
 end)
 
 AddEventHandler('playerSpawned', function()
@@ -161,6 +166,7 @@ CreateThread(function()
     if pressed then
       if not peekHeld then
         peekHeld = true
+        setWatermarkSuppressed(true)
         pushHud()
       elseif hudVisible then
         sendUpdate()
@@ -171,6 +177,7 @@ CreateThread(function()
       if peekHeld then
         peekHeld = false
         hideHud()
+        setWatermarkSuppressed(false)
       end
 
       Wait(POLL_IDLE_MS)
